@@ -30,3 +30,6 @@ _assemble*.py
 
 # 临时工作区（备份/草稿/迭代中间产物都放这里，磁盘留、git 不入）
 .workbuddy-scratch/
+
+# 本地私有书籍资料（PDF、全文、会话记忆等不入库）
+sources/private/
