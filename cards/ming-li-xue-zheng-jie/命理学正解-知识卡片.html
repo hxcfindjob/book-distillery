@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>《命理学正解》· 白板手绘逻辑图</title>
+<style>
+/* 本地后备：霞鹜文楷加载失败时使用系统字体 */
+@font-face{font-family:'LXGW WenKai';src:local('LXGW WenKai'),local('LXGWWenKai-Regular');font-display:swap}
+</style>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet" onerror="this.remove()">
+<style>
+  :root{
+    --paper:#FBF6F0;
+    --ink:#201914;
+    --muted:#9C928A;
+    --accent:#E0432E;
+    --accent-soft:rgba(224,67,46,.07);
+    --line:#6A6058;
+    --card:#FFFDFA;
+    --font-hand:"LXGW WenKai","PingFang SC","Microsoft YaHei",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-hand);
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:
+      radial-gradient(circle at 18% 12%,rgba(224,67,46,.04),transparent 42%),
+      radial-gradient(circle at 86% 82%,rgba(224,67,46,.03),transparent 46%);
+  }
+  .wrap{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:40px 24px 80px}
+  .section{margin-top:48px;scroll-margin-top:96px}
+  .section:first-child{margin-top:0}
+
+  .sec-title{font-size:40px;font-weight:400;color:var(--ink);letter-spacing:1px;display:inline-block;position:relative}
+  .sec-title::after{content:"";position:absolute;left:0;right:-6px;bottom:-9px;height:5px;background:var(--accent);border-radius:3px;transform:rotate(-.6deg)}
+  .sec-sub{margin-top:16px;font-size:22px;color:var(--muted);line-height:1.5}
+
+  .card{background:var(--card);border:2.5px solid var(--line);border-radius:14px;
+    box-shadow:3px 4px 0 rgba(0,0,0,.06);padding:24px 26px}
+  .item-title{font-size:31px;font-weight:400;color:var(--ink);line-height:1.25}
+  .item-desc{margin-top:10px;font-size:23px;color:var(--muted);line-height:1.5}
+  .red{color:var(--accent);font-weight:400}
+
+  .rise{opacity:1;transform:translateY(0);transition:opacity .6s ease,transform .6s ease}
+  .rise.show{opacity:1;transform:translateY(0)}
+  .no-anim .rise{opacity:1;transform:none}
+
+  /* HERO：一行红色大字问题 */
+  .hero{text-align:center;padding:4px 0 0}
+  .bigq{margin:0 auto;max-width:920px;font-size:44px;font-weight:400;line-height:1.35;letter-spacing:1px;color:var(--accent)}
+
+  /* 顶部 tab */
+  .tabs{position:sticky;top:0;z-index:30;margin-top:18px;display:flex;flex-wrap:wrap;gap:7px;justify-content:center;
+    background:rgba(251,246,240,.93);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);
+    padding:10px 8px;border-bottom:2px solid var(--line)}
+  .tab{font-size:18px;font-weight:400;color:var(--ink);text-decoration:none;padding:7px 13px;border:2px solid var(--line);border-radius:20px;background:var(--card);transition:all .2s;white-space:nowrap}
+  .tab:hover{border-color:var(--accent);color:var(--accent)}
+  .tab.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 0 0 3px rgba(224,67,46,.25);transform:scale(1.04)}
+
+  .prose{margin-top:24px;font-size:25px;line-height:1.62;color:var(--ink)}
+  .prose p+p{margin-top:14px}
+  .prose .lead{color:var(--accent);font-weight:400}
+  .indent{margin-left:14px;padding-left:18px;border-left:3px solid var(--line);margin-top:16px;color:var(--muted);font-size:23px;line-height:1.55}
+  .indent b{color:var(--ink)}
+
+  .points{margin-top:24px;display:flex;flex-direction:column;gap:11px}
+  .points .pt{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:15px 18px}
+  .points .pt .n{flex:0 0 42px;height:42px;border-radius:50%;background:var(--accent);color:#fff;font-size:24px;font-weight:400;display:flex;align-items:center;justify-content:center}
+  .points .pt p{font-size:24px;line-height:1.5;color:var(--ink)}
+
+  .quote{margin-top:26px;background:var(--card);border:3px solid var(--accent);border-radius:18px;padding:26px 28px;position:relative}
+  .quote .mark{position:absolute;top:-24px;left:26px;font-size:60px;color:var(--accent);font-weight:400;line-height:1}
+  .quote blockquote{font-size:29px;font-weight:400;line-height:1.55;color:var(--ink)}
+  .quote .ex{margin-top:14px;font-size:23px;color:var(--muted);line-height:1.55}
+
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:22px;border:2.5px solid var(--line);border-radius:16px;overflow:hidden}
+  .vs .col{padding:20px 22px}
+  .vs .col:first-child{border-right:2.5px dashed var(--line)}
+  .vs .vt{font-size:28px;font-weight:400;color:var(--accent)}
+  .vs .vd{margin-top:10px;font-size:23px;color:var(--ink);line-height:1.5}
+  .vs .ve{margin-top:10px;font-size:21px;color:var(--muted);line-height:1.5}
+  .vs .tag{display:inline-block;font-size:19px;color:#fff;background:var(--line);padding:4px 12px;border-radius:13px;margin-bottom:8px}
+
+  .divider{margin:60px auto 0;max-width:520px;height:26px}
+
+  .sec-title.old::after{background:var(--accent)}
+  .vs.old .tag{background:var(--line)}
+  .vs.old .vt{color:var(--accent)}
+
+  /* 核心内容：概念卡 = 标题 + 标签 + 小图 + 一句话 */
+  .core-cards{margin-top:30px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .ccard{background:var(--card);border:2.5px solid var(--line);border-radius:14px;
+    padding:18px 14px 20px;box-shadow:3px 4px 0 rgba(0,0,0,.06);display:flex;flex-direction:column;align-items:center}
+  .ccard .ctitle{font-size:25px;font-weight:400;color:var(--accent);text-align:center;line-height:1.2}
+  .ccard .ctag{margin-top:7px;font-size:19px;font-weight:400;color:var(--ink);text-align:center;line-height:1.3;min-height:44px;display:flex;align-items:center;justify-content:center}
+  .ccard .cfig{margin-top:10px;width:100%}
+  .ccard .cfig svg{width:100%;height:auto;display:block}
+  .ccard .cdesc{margin-top:10px;font-size:18px;color:var(--muted);text-align:center;line-height:1.45;max-width:200px}
+
+  @media (max-width:900px){.core-cards{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:720px){
+    .wrap{padding:32px 16px 70px}
+    .bigq{font-size:40px}
+    .sec-title{font-size:34px}
+    .tab{font-size:17px;padding:6px 10px}
+    .vs{grid-template-columns:1fr}
+    .vs .col:first-child{border-right:none;border-bottom:2.5px dashed var(--line)}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO：书名 + 作者 + 核心问题 -->
+  <header class="hero rise">
+    <h1 style="font-size:64px;font-weight:400;color:var(--ink);letter-spacing:3px;line-height:1.1">《命理学正解》</h1>
+    <div style="margin-top:10px;font-size:21px;color:var(--muted);letter-spacing:2px">许铨仁 · 1995 年初版</div>
+    <div style="margin-top:6px;font-size:20px;color:var(--muted)">全称《紫微斗数命理学正解》</div>
+    <div class="bigq" style="margin-top:18px">算命，到底是迷信还是一门学问？</div>
+  </header>
+
+  <!-- 顶部 tab 导航 -->
+  <nav class="tabs" id="tabs">
+    <a href="#s1" class="tab">① 书籍定位</a>
+    <a href="#s2" class="tab">② 现实乱象</a>
+    <a href="#s3" class="tab">③ 两大流派</a>
+    <a href="#s4" class="tab">④ 核心主张</a>
+    <a href="#s5" class="tab">⑤ 核心内容</a>
+    <a href="#s6" class="tab">⑥ 核心价值</a>
+  </nav>
+
+  <!-- 一、书籍定位 -->
+  <section class="section rise" id="s1">
+    <div class="sec-title">一 · 这本书到底在讲什么</div>
+    <div class="prose">
+      <p>这本书做了一件命理圈里少见的事：它把紫微斗数当学问来讲。作者许铨仁出身公教世家，理工科毕业，做过二十年公职，还给这门学问的定位下了断语——它是一门哲学、理则学，研究的对象是人生的规律，而不是神通法术，所以这里面没有改命改运这回事。</p>
+      <p>整套体系从《易经》长出来：太极生两仪，两仪生四象。放到命盘上，就是以紫微星立太极，以太阳、太阴两星为旋转，以"四化象"作论命的核心工具。所以这本书教的重点，不在"哪颗星是什么性格"，而在一整套推理的规则。</p>
+      <p>一句话：这不是一本教你算命的书，而是一本讲清楚<b>命盘凭什么能推理、该怎么推理</b>的教科书。</p>
+    </div>
+  </section>
+
+  <!-- 二、现实乱象 -->
+  <section class="section rise" id="s2">
+    <div class="sec-title old">二 · 它面对的现实乱象</div>
+    <div class="sec-sub">九十年代的台湾，命理市场正热；想学的人最多，能学到正确入门的最少。</div>
+    <div class="prose">
+      <p>市面上十之七八的书只讲星性：哪颗星坐命是什么性格、哪两颗星相遇会怎样，看起来好上手，背熟了就能开口论命。另一拨人走"秘传"路线：四化被包装成秘笈，一堂课开到十万二十万；改运、收惊、符咒、择日样样都做，拜师还要介绍人抽成。</p>
+      <p>作者是授课十八年、算命不收费八年的公职人员，两头的生意他都见过。他反复讲的痛处是：钱花得越多，离学问越远；想认真学的人，一入门就被带进了背星性或者买秘笈的岔路。</p>
+    </div>
+  </section>
+
+  <!-- 三、两大流派 -->
+  <section class="section rise" id="s3">
+    <div class="sec-title old">三 · 两大流派：作者要破的局</div>
+    <div class="sec-sub">当时主流的两条路子，一个省略了推理，一个把推理藏进了钱袋。</div>
+    <div class="vs old">
+      <div class="col">
+        <span class="tag">星性派</span>
+        <div class="vt">只靠星性论命</div>
+        <div class="vd">把命盘当性格说明书：背熟每颗星的含义就能断命。市面上的入门书大多属于这一路。</div>
+        <div class="ve">后果：只看星、不看四化，吉凶得失无从推起，作者直接称之为跛脚的断命术。</div>
+      </div>
+      <div class="col">
+        <span class="tag">秘仪四化派</span>
+        <div class="vt">把四化包装成秘笈</div>
+        <div class="vd">同样讲四化，却故弄玄虚、专创花样名词，编造没人见过的祖师来证"师出有门"。</div>
+        <div class="ve">后果：学问变成生意，学的人花大钱买了一堆名词，还是不会推理。</div>
+      </div>
+    </div>
+    <div class="prose">
+      <p>两派共同的缺口是同一件东西：逻辑的严密性。所以作者选了第三条路，把理工科的逻辑训练带进斗数。他说得很清楚，不敢求一统这门学问，只求拨乱反正，"让学术返归天地"，而不是一两个人的私产。</p>
+    </div>
+  </section>
+
+  <!-- 四、核心主张 -->
+  <section class="section rise" id="s4">
+    <div class="sec-title">四 · 作者的核心主张</div>
+    <div class="sec-sub">先立思想体系，再谈推理规则。这五条，就是全书的骨架。</div>
+    <div class="points">
+      <div class="pt"><div class="n">1</div><p><b>宫、星、象三合一，缺一不可。</b>宫职管"事情落在哪个领域"，星辰管"它是什么性质"，四化管"它怎么变化"。三者合起来才是一条完整的推理链，只背星性等于缺了两环。</p></div>
+      <div class="pt"><div class="n">2</div><p><b>气、象、理、数是一体的。</b>气看不到，所以要靠象来显；象从数出，数要靠理来解。观象、明理、推数，说的是同一件事的三个环节，源头都在《易经》。</p></div>
+      <div class="pt"><div class="n">3</div><p><b>四化是全盘的用神。</b>禄是缘起，代表新的开始；权是自变，代表自然发生的变化；科是延续，是对旧有的回顾；忌是终点，代表收束与结果。四个象分成两组：禄与忌相对，权与科互因。</p></div>
+      <div class="pt"><div class="n">4</div><p><b>象要讲平衡，不能单看。</b>口诀是"禄随忌走、权科互因"：讲禄要同时看忌，讲科要同时看权；单象、双象、飞宫、自化之间还要层层互动，推到立体平衡，吉凶才立得住。</p></div>
+      <div class="pt"><div class="n">5</div><p><b>星辰遇四化才起变化。</b>没有四化时，星只显本来的"性"；受四化之后，阳干之星起化学变化，性质都变了；阴干之星只起物理变化，形态变、性质不变。比如贪狼化忌，桃花收束、贪欲收敛；化禄则广结人缘，多才却变贪多。</p></div>
+    </div>
+
+    <div class="quote">
+      <div class="mark">"</div>
+      <blockquote>"紫微斗数命理学系一门哲学、理则学，而非神学、玄学、统计学。是故，绝无'改命''改运'之谬论！"</blockquote>
+      <div class="ex">这是全书开头就立下的立场，也是整本书的底色。命盘呈现的是气的规律，规律不能被收买，也不能被法术改写。读者只要认下这一条，市面上所有替你"改运"的生意，就已经跟这门学问无关了。</div>
+    </div>
+  </section>
+
+  <!-- 五、核心内容 -->
+  <section class="section rise" id="s5">
+    <div class="sec-title">五 · 核心内容</div>
+    <div class="sec-sub">全书前半立思想体系和方法论，后半拿这套工具去断婚姻、断意外、断财官。</div>
+
+    <div class="core-cards">
+      <div class="ccard">
+        <div class="ctitle">四化四象</div>
+        <div class="ctag">禄忌相对，权科互因</div>
+        <div class="cfig">
+          <svg viewBox="0 0 180 120" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="90" cy="28" r="17" fill="rgba(224,67,46,.14)" stroke="#E0432E" stroke-width="2"/>
+            <text x="90" y="33" font-size="14" fill="#E0432E" text-anchor="middle" font-family="LXGW WenKai">禄</text>
+            <circle cx="90" cy="94" r="17" fill="rgba(106,96,88,.16)" stroke="#6A6058" stroke-width="2"/>
+            <text x="90" y="99" font-size="14" fill="#6A6058" text-anchor="middle" font-family="LXGW WenKai">忌</text>
+            <circle cx="34" cy="61" r="17" fill="rgba(224,67,46,.10)" stroke="#E0432E" stroke-width="2"/>
+            <text x="34" y="66" font-size="14" fill="#E0432E" text-anchor="middle" font-family="LXGW WenKai">权</text>
+            <circle cx="146" cy="61" r="17" fill="rgba(224,67,46,.10)" stroke="#E0432E" stroke-width="2"/>
+            <text x="146" y="66" font-size="14" fill="#E0432E" text-anchor="middle" font-family="LXGW WenKai">科</text>
+            <line x1="90" y1="47" x2="90" y2="75" stroke="#E0432E" stroke-width="2" stroke-dasharray="4 3"/>
+            <line x1="53" y1="61" x2="127" y2="61" stroke="#E0432E" stroke-width="2" stroke-dasharray="4 3"/>
+          </svg>
+        </div>
+        <div class="cdesc">禄是缘起，权是自变，科是延续，忌是终点；四象是论命的用神。</div>
+      </div>
+
+      <div class="ccard">
+        <div class="ctitle">双象组合</div>
+        <div class="ctag">六种组合定格局</div>
+        <div class="cfig">
+          <svg viewBox="0 0 180 120" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="14" width="50" height="26" rx="5" fill="rgba(224,67,46,.10)" stroke="#E0432E" stroke-width="2"/>
+            <text x="35" y="32" font-size="12" fill="#E0432E" text-anchor="middle" font-family="LXGW WenKai">禄权·盛</text>
+            <rect x="65" y="14" width="50" height="26" rx="5" fill="rgba(224,67,46,.10)" stroke="#E0432E" stroke-width="2"/>
+            <text x="90" y="32" font-size="12" fill="#E0432E" text-anchor="middle" font-family="LXGW WenKai">禄科·名</text>
+            <rect x="120" y="14" width="50" height="26" rx="5" fill="rgba(224,67,46,.10)" stroke="#E0432E" stroke-width="2"/>
+            <text x="145" y="32" font-size="12" fill="#E0432E" text-anchor="middle" font-family="LXGW WenKai">权科·技</text>
+            <rect x="10" y="78" width="50" height="26" rx="5" fill="rgba(106,96,88,.14)" stroke="#6A6058" stroke-width="2"/>
+            <text x="35" y="96" font-size="12" fill="#6A6058" text-anchor="middle" font-family="LXGW WenKai">禄忌·变</text>
+            <rect x="65" y="78" width="50" height="26" rx="5" fill="rgba(106,96,88,.14)" stroke="#6A6058" stroke-width="2"/>
+            <text x="90" y="96" font-size="12" fill="#6A6058" text-anchor="middle" font-family="LXGW WenKai">权忌·突</text>
+            <rect x="120" y="78" width="50" height="26" rx="5" fill="rgba(106,96,88,.14)" stroke="#6A6058" stroke-width="2"/>
+            <text x="145" y="96" font-size="12" fill="#6A6058" text-anchor="middle" font-family="LXGW WenKai">科忌·缠</text>
+            <line x1="90" y1="44" x2="90" y2="76" stroke="#6A6058" stroke-width="2" stroke-dasharray="3 3"/>
+          </svg>
+        </div>
+        <div class="cdesc">两个象同宫，含义就定了调：丰盛、名利、专技、起伏、突变、纠缠。</div>
+      </div>
+
+      <div class="ccard">
+        <div class="ctitle">十二宫职</div>
+        <div class="ctag">一、六、九体用合一</div>
+        <div class="cfig">
+          <svg viewBox="0 0 180 120" xmlns="http://www.w3.org/2000/svg">
+            <rect x="20" y="20" width="46" height="34" rx="5" fill="rgba(224,67,46,.12)" stroke="#E0432E" stroke-width="2"/>
+            <text x="43" y="42" font-size="13" fill="#E0432E" text-anchor="middle" font-family="LXGW WenKai">命宫·性</text>
+            <rect x="67" y="20" width="46" height="34" rx="5" fill="rgba(106,96,88,.14)" stroke="#6A6058" stroke-width="2"/>
+            <text x="90" y="42" font-size="13" fill="#6A6058" text-anchor="middle" font-family="LXGW WenKai">疾厄·心</text>
+            <rect x="114" y="20" width="46" height="34" rx="5" fill="rgba(106,96,88,.14)" stroke="#6A6058" stroke-width="2"/>
+            <text x="137" y="42" font-size="13" fill="#6A6058" text-anchor="middle" font-family="LXGW WenKai">官禄·运</text>
+            <text x="90" y="80" font-size="12" fill="#E0432E" text-anchor="middle" font-family="LXGW WenKai">观人在心，不在性</text>
+            <text x="90" y="102" font-size="11" fill="#6A6058" text-anchor="middle" font-family="LXGW WenKai">性不能改，心会变</text>
+          </svg>
+        </div>
+        <div class="cdesc">十二宫各司其职；命宫、疾厄、官禄三宫是体用合一的主轴。</div>
+      </div>
+
+      <div class="ccard">
+        <div class="ctitle">天地数</div>
+        <div class="ctag">数目原盘直取</div>
+        <div class="cfig">
+          <svg viewBox="0 0 180 120" xmlns="http://www.w3.org/2000/svg">
+            <defs><marker id="m5" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#E0432E"/></marker></defs>
+            <line x1="16" y1="36" x2="164" y2="36" stroke="#6A6058" stroke-width="2"/>
+            <text x="24" y="24" font-size="11" fill="#6A6058" font-family="LXGW WenKai">甲</text>
+            <text x="158" y="24" font-size="11" fill="#6A6058" text-anchor="end" font-family="LXGW WenKai">癸</text>
+            <rect x="52" y="58" width="76" height="30" rx="5" fill="rgba(224,67,46,.10)" stroke="#E0432E" stroke-width="2"/>
+            <text x="90" y="78" font-size="12" fill="#E0432E" text-anchor="middle" font-family="LXGW WenKai">象中藏数</text>
+            <path d="M90,44 L90,56" fill="none" stroke="#E0432E" stroke-width="2" marker-end="url(#m5)"/>
+            <text x="90" y="108" font-size="11" fill="#6A6058" text-anchor="middle" font-family="LXGW WenKai">宫干有数，直接从盘上取</text>
+          </svg>
+        </div>
+        <div class="cdesc">天干本身有数，象里也藏着数；应验的数目直接从命盘推，不用外求。</div>
+      </div>
+    </div>
+
+    <div class="prose" style="margin-top:28px">
+      <p><b style="color:var(--accent)">四化四象，是一切论断的起点。</b>禄象征缘起，坐进哪个宫，那里就是聚缘的地方；生年禄在迁移宫，传统上叫外地发迹，人脉和机会都在远方。权是本来就会发生的变化，所以带权的星自有一股不向环境低头的韧劲，却也容易孤独。科是对旧有的回顾，念旧、重名声、有贵人缘。忌是终点，但终点不等于绝路——就像一年过了冬天又立春，收束的同一刻也藏着下一个开始。</p>
+      <p style="margin-top:10px"><b style="color:var(--accent)">双象同宫，格局就有了定调。</b>禄权同宫主丰盛，适合投资生产的生意；禄科同宫名利双收，偏向会计师、律师这类以名声带财的路子；权科组合走专技，工程师、技师是典型；禄忌同宫起伏大，往往以双忌论；权忌主突变，来得莫名去也莫名；科忌则纠缠，感情上藕断丝连、是非拖拉。两个象一碰面，这个宫位的基调就出来了。</p>
+      <p style="margin-top:10px"><b style="color:var(--accent)">十二宫里，藏着一套修身的位置学。</b>命宫是性，疾厄宫是心，官禄宫是后天运势，一、六、九正好是河图洛书的体用。作者借佛家的话作比：官禄如业，疾厄如障。看一个人，要看心而不只看性，因为心是气化之源，会变；性却改不了。所以读盘的落点从来不是认命，而是认清自己的走向之后，知道该往哪里用功。</p>
+      <p style="margin-top:10px"><b style="color:var(--accent)">天地数，是全书压轴公开的一手。</b>作者说数目都在原盘直取：宫干定"目"（数目的单位），化象定"数"（具体的数字）。作者推演了一个真实案例：一位富翁合伙失败，从大运财帛宫的双忌冲命，推到宫干之数是七位（百万单位），再加上化科的五加三得八，一路推出被冒领八百多万元。这套原属"秘传"的推法，作者把它全部摊开，给的理由很直接：秘则贵，贵则有人借它敛财；把秘公开，歪风就少了滋生的土壤。</p>
+    </div>
+
+  </section>
+
+  <!-- 六、对今天的核心价值 -->
+  <section class="section rise" id="s6">
+    <div class="sec-title">六 · 对今天的核心价值</div>
+    <div class="sec-sub">这本书写在三十年前，它防的那些坑，今天一个都没少。</div>
+    <div class="points">
+      <div class="pt"><div class="n">①</div><p><b>学推理，别先背性格。</b>今天入门斗数的人，大多还是先被"某星坐命是什么性格"吸引。这本书给的顺序相反：先立思想体系，再谈论断规则。这个顺序本身就是防坑能力——遇到不讲推理过程、只让你背结论的内容，先打个问号再说。</p></div>
+      <div class="pt"><div class="n">②</div><p><b>"改运"的生意可以直接划走。</b>既然这门学问里根本没有改命改运，收惊、符咒、改运费在体系里就没有任何位置。以后再遇到开口就要钱替你改运的人，不用纠结他灵不灵，这本书已经替你把判断做完了。</p></div>
+      <div class="pt"><div class="n">③</div><p><b>读盘的落点是修心，不是认命。</b>命宫是性，疾厄宫是心；性改不了，心却一直在变。同样是看盘，落点不在"我命如此"，而在看清自己的走向之后，知道该在哪个位置用功、什么时候进、什么时候退。</p></div>
+    </div>
+    <div class="indent">它也有局限：理则严谨，灵活性却是短板，特殊情况未必都装得进规则里，读过的书友普遍建议之后再参看其他门派；论断实例依赖完整的宫星象推演，初学门槛不低；斗数各派对四化的解释并不统一，这是一家之言。把它当逻辑严密的入门教科书读，别当万能公式用。</div>
+  </section>
+
+</div>
+
+<script>
+  var tabs=Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  var sections=tabs.map(function(t){return document.querySelector(t.getAttribute('href'));}).filter(Boolean);
+  var spy=new IntersectionObserver(function(entries){
+    var best=null,bestRatio=-1;
+    entries.forEach(function(e){
+      if(e.isIntersecting && e.intersectionRatio>bestRatio){best=e.target;bestRatio=e.intersectionRatio;}
+    });
+    if(best){
+      var id='#'+best.id;
+      tabs.forEach(function(t){t.classList.toggle('active', t.getAttribute('href')===id);});
+    }
+  },{rootMargin:'-40% 0px -45% 0px',threshold:[0,0.25,0.5,0.75,1]});
+  sections.forEach(function(s){spy.observe(s);});
+</script>
+</body>
+</html>

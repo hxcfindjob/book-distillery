@@ -25,7 +25,7 @@ description: 把书籍知识库（你的书籍库/）的书与核心概念构建
 
 ## 增量流程（每做完一本就做，4 步）
 
-1. **新书写进 `书单数据源.md`**：`数字. 《书名》｜作者：X｜关键词：a、b、c｜豆瓣评分：X`，归到 15 类里对应那一类。字段规范见 [references/schema.md](references/schema.md)。
+1. **新书写进 `书单数据源.md`**：`数字. 《书名》｜作者：X｜关键词：a、b、c｜豆瓣评分：X`，归到 16 类里对应那一类。字段规范见 [references/schema.md](references/schema.md)。
 2. **增量 graph.json**：在 `nodes` 加这本书（type=book, status=done, category/subcategory）+ 它的代表概念（type=concept, book=book_id, category=继承）；在 `links` 加书↔书、书↔概念的连线，relation 用统一字典。引用了但还没收录的书，标 `status: "referenced"`（虚线圆），收录后改 `done`。
 3. **跑一次 `python3 scripts/gen_spatial.py`**：默认输出 `书籍知识图谱.html`（**唯一准版本**）。脚本会自动扫描 books/ 下所有"知识卡片"html 文件构建 CARD_MAP；**默认内嵌完整 graph.json 到 `_EMBEDDED_GRAPH`**（双击 file:// 立即能用，绝不报"必须 server 打开"红色 fail box）+ async fetch('./graph.json') 作为可选升级（HTTP server 打开时拿最新数据替换内嵌）。**判别**：改 HTML 数据流时 grep `_EMBEDDED_GRAPH = {` 锚点；fetch 写进 try/catch + catch 静默回退到内嵌（**绝不在 catch 里 throw / 弹错误框**）。
 4. **验证布局**：双击 `书籍知识图谱.html`（file:// 即可，**无需起 server**）→ 应秒开并显示新节点；不显示就重跑第 3 步。同大类自然成团、关系相近的自动聚类、相悖用红线连、待收录书是虚线圆。
@@ -71,7 +71,7 @@ description: 把书籍知识库（你的书籍库/）的书与核心概念构建
 | ⑥ | `initialT = d3.zoomIdentity`（**必须不平移**）；`d3.zoomIdentity.translate(W/2,H/2)` 会把整图推到右下角，左半空白 0-960 | v25.48k 根因 |
 | ⑦ | 生成"待审补充"清单永远并入主结构同一分类，不要另起独立区块重复列 | v25.48l |
 | **密度四件套** | 初始位置 `W*0.42 / H*0.65`；charge `-240`；link 距离 `160/85/55` strength `0.45`；collide `radius(d)+12 / 0.7` | v25.48l |
-| **配色** | 15 类沿色相环均布+浅一档：明度≥60%/饱和≤80%；禁灰/褐/米/纯深族 | |
+| **配色** | 16 类沿色相环均布+浅一档：明度≥60%/饱和≤80%；禁灰/褐/米/纯深族 | |
 | **节点描边** | 书 `rgba(255,255,255,0.75) 1.5px` / 概念 `rgba(255,255,255,0.45) 0.8px`；禁黑边/粗描边；文字不加 stroke | 定稿 |
 | **背景** | 径向渐变中心浅四周深（深 `#27374F→#1A2238→#0C1120`，浅 `#FFFCF5→#ECE0C8→#C8B596`）；禁黑洞/图谱/光晕/四角羽化 | |
 | **数据源脚本坑** | sync 注入时**用 `let GRAPH = _EMBEDDED_GRAPH;` 作下界锚点**，避开 `const _EMBEDDED_GRAPH = {` 双重花括号永不闭合 | |
@@ -109,8 +109,8 @@ description: 把书籍知识库（你的书籍库/）的书与核心概念构建
 
 **关系质量红线**：书与书的连线必须基于**核心观点的明确对应**，不能因为 A 书里出现某个词（如"金钱""信任""规则"），就硬拉一条线到同样出现这个词的 B 书。判断标准：两书是否真正在回答同一个问题、拆解同一个底层机制、或指向同一套人性/认知/行为逻辑？如果只是"提过"而非"核心论证"，宁可不连。关系少而实，远好于关系多而牵强。
 
-**配色/分类**：按**大类（category）**分组着色（同大类书同色系，不是每本书随机色）。15 个大类色板参考生活方式品牌包装：暖奶油底 + 低饱和高明度粉黄蓝绿 + 一个高能量暖红锚点（如 Horse Gift 的 `#E8483E`）。具体值见 `graph.json` 的 `meta.category_colors` 与 `meta.color_by_relation`；新增大类先从现有 5 个色系家族里取同色系延伸，保持暖调、低饱和、高明度，禁冷灰、禁纯霓虹。书节点加兼容版柔和投影（`feGaussianBlur+feOffset+feMerge`，避免 `<feDropShadow>` 在某些浏览器不渲染），模拟包装在暖光下的浮起感。
+**配色/分类**：按**大类（category）**分组着色（同大类书同色系，不是每本书随机色）。16 个大类色板参考生活方式品牌包装：暖奶油底 + 低饱和高明度粉黄蓝绿 + 一个高能量暖红锚点（如 Horse Gift 的 `#E8483E`）。具体值见 `graph.json` 的 `meta.category_colors` 与 `meta.color_by_relation`；新增大类先从现有 5 个色系家族里取同色系延伸，保持暖调、低饱和、高明度，禁冷灰、禁纯霓虹。书节点加兼容版柔和投影（`feGaussianBlur+feOffset+feMerge`，避免 `<feDropShadow>` 在某些浏览器不渲染），模拟包装在暖光下的浮起感。
 
-**大类小类**：每本书必填 `category`（15 个大类之一，权威来源 = `wereading-blog/js/books.js` 的 `window.BOOK_LIST`，已与 `graph.json` 的 `meta.categories` 逐本核对一致）。用户暂定**不加小类**，每本书单分类，`subcategory` 暂不填充、不做二级聚类。同大类在力导向图中有弱引力聚类。
+**大类小类**：每本书必填 `category`（16 个大类之一，权威来源 = `wereading-blog/js/books.js` 的 `window.BOOK_LIST`，已与 `graph.json` 的 `meta.categories` 逐本核对一致；玄学类为用户 2026-09 新增，收术数命理/占卜预测书）。用户暂定**不加小类**，每本书单分类，`subcategory` 暂不填充、不做二级聚类。同大类在力导向图中有弱引力聚类。
 
 **节点描边（已定稿，禁倒退）**：节点圆圈**不得用深色/黑边**（`#6A6058`、`var(--line)`、纸色粗描边等一律禁用——早期版本因此出现过"黑边"被用户否掉）。最终规则：书节点 `rgba(255,255,255,0.75)` 1.5px、概念节点 `rgba(255,255,255,0.45)` 0.8px、待收录虚线圆照旧不描边；节点文字**不加任何 stroke / paint-order**，纯靠背景色保证可读。这版用户已确认满意，以后改 gen_spatial.py 重生成时这条必须保留。

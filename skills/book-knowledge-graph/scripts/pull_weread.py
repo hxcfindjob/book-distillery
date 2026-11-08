@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""从微信读书书架拉全量书籍，剔除纯职业/应试书，按 15 大类映射，
+"""从微信读书书架拉全量书籍，剔除纯职业/应试书，按 16 大类映射，
 合并进现有的「书籍核心要点清单.md」（ 单一结构，不另起独立区块）。
 
 ⚠️ 隐私：本脚本需要 `WEREAD_KEY`（微信读书开放 API 的 Bearer Token）。
@@ -76,8 +76,8 @@ HARD_DROP_KEYWORDS = re.compile(
 )
 
 
-CATS_15 = [
-    "经济与商业", "人性洞察", "思维认知", "哲学思辨", "财富认知", "底层规律", "能力提升",
+CATS_16 = [
+    "经济与商业", "人性洞察", "思维认知", "哲学思辨", "玄学", "财富认知", "底层规律", "能力提升",
     "人际关系与沟通", "文学经典", "习惯养成", "名人传记", "成事方法", "历史", "决策避坑", "心理成长",
 ]
 
@@ -95,11 +95,12 @@ KEY_REMAP = {
     "成事方法": ["OKR", "项目管理", "管理", "领导力", "高效能", "工作", "职场", "执行", "经理", "领导",
                   "团队", "组织行为", "绩效", "授权", "精要主义", "要事第一", "关键对话"],
     "人际关系与沟通": ["人际", "情商", "非暴力沟通", "公开讲话", "即兴演讲"],
+    "玄学": ["紫微", "斗数", "八字", "命理", "风水", "占星", "塔罗", "四柱", "六爻", "奇门", "相术"],
 }
 
 
 def shelf_map(sc, title):
-    """微信读书原生 category → 15 大类"""
+    """微信读书原生 category → 16 大类"""
     if sc == "个人成长-认知思维": return "思维认知"
     if sc == "个人成长-人生哲学": return "思维认知"
     if sc == "个人成长-沟通表达": return "人际关系与沟通"
@@ -110,6 +111,7 @@ def shelf_map(sc, title):
     if sc.startswith("心理-"): return "心理成长"
     if sc.startswith("哲学宗教-"):
         if "思维" in sc or "逻辑" in sc: return "思维认知"
+        if any(k in sc for k in ["命理", "占卜", "星象", "风水", "术数", "星座"]): return "玄学"
         return "哲学思辨"
     if sc.startswith("经济理财-财经"): return "经济与商业"
     if sc.startswith("经济理财-商业"): return "经济与商业"
@@ -244,7 +246,7 @@ def main():
 
     # 在每个分类章节尾部追加 书架补充 本（无关键词、仅标补充标记）
     insert_count_by_cat = {}
-    for cat in CATS_15:
+    for cat in CATS_16:
         items = sorted(by_cat.get(cat, []), key=lambda x: (not x["finished"], x["title"]))
         if not items:
             continue
@@ -271,7 +273,7 @@ def main():
 
     print(f"✅ 微信读书补充已合并进 {md_path}")
     print(f"   本次新增 {len(missing)} 本（剔除 {len(dropped)} 本纯职业书）")
-    for c in CATS_15:
+    for c in CATS_16:
         n = insert_count_by_cat.get(c, 0)
         if n:
             print(f"   · {c}：+{n}")

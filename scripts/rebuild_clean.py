@@ -249,11 +249,12 @@ def build_graph(catalog: list, existing: dict = None):
         "哲学思辨": "#6F86D6",
         "名人传记": "#B8A6E8",
         "历史": "#C68B59",
+        "玄学": "#8C6FC8",
     }
     category_colors = {c: base_category_colors.get(c, "#999999") for c in cats_in_use}
     meta = {
         "version": "1.0-lite",
-        "description": "开源版 22 本书籍知识图谱",
+        "description": f"书籍知识图谱 ({len(book_nodes)} 本)",
         "node_types": ["book", "concept", "domain", "author", "category"],
         "relation_types": ["相似", "相悖", "互补", "应用", "引用", "批判", "包含"],
         "color_by_relation": {

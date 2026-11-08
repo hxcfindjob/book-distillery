@@ -18,7 +18,7 @@ description: 书籍知识库端到端总控 SOP —— 编排「输入 → 建�
 | 角色 | skill | 职责 | 产物 |
 |---|---|---|---|
 | ① 建卡 | `book-knowledge-card` | 可视化卡片 | `cards/<拼音>/<书名>-知识卡片.html` |
-| ② 分类 | `book-category-classify` | 归 15 大类（边界真值） | 分类判定 |
+| ② 分类 | `book-category-classify` | 归 16 大类（边界真值） | 分类判定 |
 | ② 提词 | `book-core-points` | 抽 2-4 可迁移关键词 | `书单数据源.md`（唯一真值：分类 + 关键词） |
 | ③ 建图 | `book-knowledge-graph` | 增量节点 + 出图 | `书籍知识图谱模板.html`（图谱可双击打开） |
 | 总控 | `book-knowledge-workflow`（本文） | 只编排不写内容 | — |
@@ -38,7 +38,7 @@ description: 书籍知识库端到端总控 SOP —— 编排「输入 → 建�
 ```
 
 **三处真值链（改一处必同步另外两处）**：
-- 卡片的分类 `category` ← 来自 `书单数据源.md`（15 大类）
+- 卡片的分类 `category` ← 来自 `书单数据源.md`（16 大类）
 - `书单数据源.json` 的分类 ← 同上
 - 图谱节点的 `category` ← 同上
 
@@ -47,7 +47,7 @@ description: 书籍知识库端到端总控 SOP —— 编排「输入 → 建�
 ### Phase 0 · 输入获取
 - **A. 用户给素材**（笔记/划线/口述/成稿）→ 直接进 `book-knowledge-card` 的「输入即素材」通道。
 - **B. 只给书名（没读过）→ 速读模式**：`book-knowledge-card` 调微信读书接口取真实重点（章号/热门划线必须来自真实返回，**严禁编造**）。
-- **C. 微信读书书架批量**：`book-knowledge-card` 的 `pull_weread` 通道拉书架 → 标 15 类 → 批量建卡。
+- **C. 微信读书书架批量**：`book-knowledge-card` 的 `pull_weread` 通道拉书架 → 标 16 类 → 批量建卡。
 
 > **分类纪律（贯穿全程）**：动笔/归类前先查 `书单数据源.md` + `book-category-classify` 这本归哪类；`category` 在卡片/清单/图谱三处必须一致。
 
@@ -58,10 +58,10 @@ description: 书籍知识库端到端总控 SOP —— 编排「输入 → 建�
 4. 落盘到 `cards/<拼音>/`，**绝不覆盖标杆母版**。
 
 ### Phase 2 · 提要点 + 分类（book-core-points + book-category-classify）
-1. **分类归属先走 `book-category-classify`**（15 类唯一真值：边界/）。
+1. **分类归属先走 `book-category-classify`**（16 类唯一真值：边界/）。
 2. 从 Phase 1 的卡片抽可学内容 → 给 2-4 个**可迁移短关键词**（≤8 字）。
 3. 过 `book-core-points` 的「9 类必杀」自检 + `references/check_points.py` 自检（0 违规才收）。
-4. 追加进 `书单数据源.md`，归到对应 15 类。
+4. 追加进 `书单数据源.md`，归到对应 16 类。
 5. **迭代时永远先 Read 当前磁盘 `书单数据源.md`**，绝不凭记忆补回用户删的书。
 
 ### Phase 3 · 增量建图谱（book-knowledge-graph）
@@ -107,6 +107,6 @@ description: 书籍知识库端到端总控 SOP —— 编排「输入 → 建�
 
 - `book-knowledge-card` —— 建卡（视觉/语言/结构/红线最全）。
 - `book-core-points` —— 提炼 2-4 个可迁移关键词（9 类必杀 + check_points.py）。
-- `book-category-classify` —— 归 15 大类（边界/迭代版本纪律）。
+- `book-category-classify` —— 归 16 大类（边界/迭代版本纪律）。
 - `book-knowledge-graph` —— 增量节点 + 出图（RC 红线速查 + 脚本架构）。
 - 四者构成「真值源 → 关键词 → 跨书节点」的闭环；本 skill 是它们的编排入口。

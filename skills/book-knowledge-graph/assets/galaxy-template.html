@@ -218,7 +218,7 @@ const sim = d3.forceSimulation(nodes)
       .strength(l=> 0.45))  /* v25.48l 0.55→0.45, 弱化 link 黏性, 让 charge 自然推开 */
   .force("charge", d3.forceManyBody().strength(-240))  /* v25.48l -180→-240 推力加强, 让概念节点不再堆成蜂窝, 但仍比 demo -340 弱 (避免 v25.22 那种外散) */
   .force("center", d3.forceCenter(W()/2, H()/2).strength(0.45))  /* v25.48l 1.0→0.45, 不再强拉到 (960,505) 死堆, 留充电让 780 nodes 自然分散. 用户原话 "太过密集, 密集恐惧症" */
-  /* v25.27 catCenters 大幅缩小到 0.08/0.06：v25.22 0.18/0.14 让 15 大类分散到画面边缘造成空旷，现在改"小岛心"让大类只在画面内松散聚拢，不挤向边缘 */
+  /* v25.27 catCenters 大幅缩小到 0.08/0.06：v25.22 0.18/0.14 让 16 大类分散到画面边缘造成空旷，现在改"小岛心"让大类只在画面内松散聚拢，不挤向边缘 */
   .force("clusterX", d3.forceX(d=> d.type==="book" && d.category && catCenters[d.category] ? W()/2 + catCenters[d.category].x*Math.min(W(),H())*0.5  /* v25.48f catCenters.x=cos*0.05, [0.15,0.15]=±135px@1440×900 */ : W()/2).strength(0))  /* v25.48g cluster 完全关掉, 让 forceCenter 0.8 主导. 用户原话 "打开就在中央, 不能左半边空" */
   .force("clusterY", d3.forceY(d=> d.type==="book" && d.category && catCenters[d.category] ? H()/2 + catCenters[d.category].y*Math.min(W(),H())*0.5  /* v25.48f */ : H()/2).strength(0))  /* v25.48g 跟 clusterX 对齐 */
   .force("collide", d3.forceCollide().radius(d=>radius(d)+12).strength(0.7))

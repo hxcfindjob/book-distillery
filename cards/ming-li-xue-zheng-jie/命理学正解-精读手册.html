@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>《命理学正解》精读手册</title>
+<style>
+  :root{
+    --paper:#FDF9F0; --paper-2:#F6EFDF; --ink:#3A3630; --ink-soft:#6E675C;
+    --accent:#C0562F; --accent-2:#4A7A96; --green:#5E8C61; --gold:#B8860B;
+    --marker:rgba(255,220,90,.55); --line:#D8CDB8;
+    --purple:#8C6FC8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--paper); color:var(--ink); font-size:16px; line-height:1.85;
+  }
+  .layout{display:flex; max-width:1280px; margin:0 auto;}
+  /* ---------- 侧边目录 ---------- */
+  nav.toc{
+    width:230px; flex-shrink:0; position:sticky; top:0; height:100vh; overflow-y:auto;
+    padding:36px 18px; border-right:2px dashed var(--line); background:var(--paper);
+  }
+  nav.toc h3{font-size:13px; letter-spacing:2px; color:var(--ink-soft); margin-bottom:14px;}
+  nav.toc a{
+    display:block; font-size:13.5px; color:var(--ink-soft); text-decoration:none;
+    padding:5px 10px; border-radius:8px; margin:2px 0; border:1.5px solid transparent;
+  }
+  nav.toc a:hover{background:var(--paper-2); color:var(--ink);}
+  nav.toc a.sub{padding-left:24px; font-size:12.5px;}
+  nav.toc .num{display:inline-block; width:20px; color:var(--accent); font-weight:700;}
+  /* ---------- 正文 ---------- */
+  main{flex:1; padding:48px 56px 120px; max-width:900px;}
+  section{margin-bottom:64px; scroll-margin-top:24px;}
+  h1{
+    font-size:34px; line-height:1.4; margin-bottom:6px;
+  }
+  .hero-sub{color:var(--ink-soft); font-size:15px; margin-bottom:20px;}
+  h2{
+    font-size:24px; margin-bottom:18px; padding-bottom:8px;
+    border-bottom:3px solid var(--ink); display:inline-block;
+  }
+  h2 .chip{
+    font-size:12px; vertical-align:middle; background:var(--ink); color:var(--paper);
+    border-radius:999px; padding:2px 10px; margin-right:10px; letter-spacing:1px;
+  }
+  h3{font-size:18px; margin:26px 0 10px; color:var(--accent);}
+  p{margin-bottom:12px;}
+  .lead{font-size:16.5px;}
+  em.hl{font-style:normal; background:var(--marker); padding:1px 4px; border-radius:3px;}
+  .quote{
+    border-left:4px solid var(--accent); background:var(--paper-2);
+    padding:10px 16px; margin:14px 0; border-radius:0 10px 10px 0;
+    font-family:"Kaiti SC","KaiTi","STKaiti",serif; font-size:15.5px;
+  }
+  .quote .src{display:block; font-size:12px; color:var(--ink-soft); margin-top:4px; font-family:inherit;}
+  /* 便签 */
+  .note{
+    background:#FFF9E3; border:1.5px solid #E8D48A; border-radius:4px 14px 4px 14px;
+    padding:12px 16px; margin:16px 0; font-size:14.5px;
+    transform:rotate(-.4deg); box-shadow:2px 3px 0 rgba(0,0,0,.06);
+  }
+  .note b{color:var(--gold);}
+  .warn{
+    background:#FDEEE8; border:1.5px solid #E8A88F; border-radius:4px 14px 4px 14px;
+    padding:12px 16px; margin:16px 0; font-size:14.5px; transform:rotate(.4deg);
+  }
+  /* 表格 */
+  table{border-collapse:collapse; width:100%; margin:14px 0; font-size:14px;}
+  th{background:var(--ink); color:var(--paper); font-weight:600; padding:7px 10px; text-align:left;}
+  td{border:1.5px solid var(--line); padding:7px 10px; background:#FFFDF8; vertical-align:top;}
+  tr:nth-child(even) td{background:var(--paper-2);}
+  td .kw{color:var(--accent); font-weight:700;}
+  /* 卡片网格 */
+  .grid{display:grid; gap:14px; margin:16px 0;}
+  .grid.c2{grid-template-columns:1fr 1fr;}
+  .grid.c3{grid-template-columns:1fr 1fr 1fr;}
+  .card{
+    background:#FFFDF8; border:1.8px solid var(--ink); border-radius:6px 18px 6px 18px;
+    padding:14px 16px; box-shadow:3px 4px 0 rgba(0,0,0,.08);
+  }
+  .card h4{font-size:15.5px; margin-bottom:6px;}
+  .card h4 .tag{
+    font-size:11px; background:var(--accent); color:#fff; border-radius:999px;
+    padding:1px 8px; margin-left:6px; vertical-align:middle;
+  }
+  .card p{font-size:13.5px; margin-bottom:4px; color:var(--ink);}
+  .card .plain{color:var(--ink-soft); font-size:13px;}
+  .card.luck{border-color:var(--accent);}
+  .card.plain-c{border-color:var(--green);}
+  .step{
+    display:flex; gap:12px; margin:10px 0; align-items:flex-start;
+  }
+  .step .n{
+    flex-shrink:0; width:28px; height:28px; border:2px solid var(--ink); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px;
+    background:#FFFDF8; margin-top:2px;
+  }
+  .case{
+    background:var(--paper-2); border:2px dashed var(--ink-soft); border-radius:12px;
+    padding:16px 20px; margin:18px 0; font-size:14.5px;
+  }
+  .case h4{color:var(--accent-2); margin-bottom:8px;}
+  .faq{border:1.5px solid var(--line); border-radius:12px; padding:14px 18px; margin:12px 0; background:#FFFDF8;}
+  .faq b.q{display:block; margin-bottom:6px; font-size:15.5px;}
+  .toc-top{text-align:right; font-size:12px; margin-top:6px;}
+  .toc-top a{color:var(--ink-soft); text-decoration:none;}
+  @media (max-width:1000px){
+    nav.toc{display:none} main{padding:32px 20px 80px}
+    .grid.c3{grid-template-columns:1fr} .grid.c2{grid-template-columns:1fr}
+  }
+  @media print{ nav.toc{display:none} }
+</style>
+</head>
+<body>
+<div class="layout">
+
+<nav class="toc">
+  <h3>目 录</h3>
+  <a href="#s0"><span class="num">0</span>导读：怎么用这本手册</a>
+  <a href="#s1"><span class="num">1</span>先立三观：命理学是什么</a>
+  <a href="#s2"><span class="num">2</span>命盘的零件：十二宫</a>
+  <a href="#s2b"><span class="num">2+</span>宫位的六组分类法</a>
+  <a href="#s3"><span class="num">3</span>全书引擎：四化体系</a>
+  <a href="#s4"><span class="num">4</span>十天干四化速查表</a>
+  <a href="#s5"><span class="num">5</span>生年四化落十二宫</a>
+  <a href="#s6"><span class="num">6</span>飞宫与自化：动的规则</a>
+  <a href="#s7"><span class="num">7</span>星辰篇：十四主星</a>
+  <a href="#s7b"><span class="num">7+</span>吉星与煞星</a>
+  <a href="#s8"><span class="num">8</span>应用：婚姻·意外·财官</a>
+  <a href="#s9"><span class="num">9</span>天地数：书里压轴的秘技</a>
+  <a href="#s10"><span class="num">10</span>两个完整案例拆解</a>
+  <a href="#s11"><span class="num">11</span>术语速查表</a>
+  <a href="#s12"><span class="num">12</span>常见问题 FAQ</a>
+</nav>
+
+<main>
+
+<h1>《命理学正解》精读手册</h1>
+<p class="hero-sub">许铨仁 著 · 254 页 · 8 章 ｜ 本手册按「简单易懂」重组全书，术语忠于原书，白话解释为编者加工</p>
+
+<!-- ============ 0 导读 ============ -->
+<section id="s0">
+  <h2><span class="chip">导读</span>怎么用这本手册</h2>
+  <p class="lead">原书是授课讲义整理，体系严密但顺序对新手不友好。这本手册把全书重排成一条学习路径：</p>
+  <div class="step"><div class="n">1</div><div><b>第 1-2 节·打地基</b>：先搞清作者的立场（这是一门理则学，不是算命话术），认识命盘上的「零件」——十二宫。</div></div>
+  <div class="step"><div class="n">2</div><div><b>第 3-6 节·学引擎</b>：四化是全书的方法论核心。搞懂禄权科忌四个字，再看它们怎么「落宫」「飞动」。</div></div>
+  <div class="step"><div class="n">3</div><div><b>第 7-10 节·看实例</b>：星辰是素材库，第五~七章是应用，最后看两个完整案例把前面全部串起来。</div></div>
+  <p>手册里所有<em class="hl">黄色高亮</em>是全书的关键句；<b>「白话说」</b>是编者的通俗转译，<em class="hl">「」引号内</em>是原书原文。</p>
+</section>
+
+<!-- ============ 1 三观 ============ -->
+<section id="s1">
+  <h2><span class="chip">第一章</span>先立三观：命理学是什么</h2>
+  <h3>1.1 作者的立场：哲学，不是神学</h3>
+  <p>全书开宗明义：<em class="hl">「紫微斗数命理学根源于易学」</em>——日月为易，易道阴阳。斗数盘上子位开天、丑位辟地、寅位生人，以紫微星立太极，以太阳太阴为旋转，以「四化」为占命论运的用神，所以它本质上是<em class="hl">「天人合一的哲学，以人本为中心」</em>。</p>
+  <p>由此推出全书的根本立场，作者反复强调：</p>
+  <div class="quote">「绝无『改命』『改运』之谬论，否则天理何在？因果相续何由？命理学亦不复存在。」<span class="src">—— 这是全书的底线，也是它区别于江湖术士的分界线</span></div>
+  <p>那命理学干什么用？作者给了三条定位：①<em class="hl">知命立命</em>；②了解命的本质——辅导不失方向；③测知运的荣枯——进退不失依据。说白了：<b>它是咨询顾问，不是改运的神。</b></p>
+
+  <h3>1.2 他批判谁：两种「跛脚」</h3>
+  <p>作者当过 17 年公职（海关）、大学读理工，写书自称是「拨乱反正」。他主要批两派：</p>
+  <table>
+    <tr><th style="width:22%">被批对象</th><th>作者的批评</th></tr>
+    <tr><td><b>三合派（星性派）</b></td><td>坊间十之七八的书只讲星性论命。<em class="hl">「殊不知无十干化曜四化象的冲动，焉有吉凶得失？」</em>——只看星星不动四化，是「跛脚的断命术」。</td></tr>
+    <tr><td><b>四化派（飞星）</b></td><td>自视甚高，<em class="hl">「专创各种花样的名词，编造 XX 老人（无人见过面）表师出有门」</em>——名词泡沫化，不讲哲学根基。</td></tr>
+  </table>
+  <p>所以他提出正解是：<em class="hl">「宫（宫职）、星（性与相）、象（四化）三合一之完全解义学，缺一不可。」</em>——宫位定「领域」、星辰定「性质」、四化定「变化」，三者合参才有吉凶。这本手册的第 2、7、3 节，正好对应这三块零件。</p>
+
+  <h3>1.3 命与运：一个能改，一个不能</h3>
+  <p>作者的定义：<b>命</b>是出生那一刻定下的先天格局（空间理念）；<b>运</b>是后天行进的时间流程（时间理念）。命和运乃「先天化后天」与「后天返先天」的循环。</p>
+  <div class="note"><b>书里最关键的一句辩证</b>：命宫（1）是「性」，疾厄宫（6）是「心」，官禄宫（9）是后天运势——<em class="hl">「心是会变的，而性不能改……故心是会变的，此即『率性之谓命』也」</em>。白话说：<b>本性改不了，但用心可以转运势</b>。福德宫主「惜福、积德、行善，相当于可再造八字」——这就是全书认可的唯一「改运」方式：修自己，不靠外力。</div>
+</section>
+
+<!-- ============ 2 十二宫 ============ -->
+<section id="s2">
+  <h2><span class="chip">第二章</span>命盘的零件：十二宫</h2>
+  <p>命盘是把出生年月日时换算成 12 个「宫职」，每宫管一个人生领域。<b>每个宫都有两层读法</b>：静态看坐的星（星象解说），动态看飞进飞出的四化（四化解说）——「静动合参，即规范了该宫之林林总总、含吉凶悔吝」。</p>
+  <table>
+    <tr><th style="width:14%">宫</th><th style="width:40%">管什么</th><th>别名 / 加分读法</th></tr>
+    <tr><td><b>命宫</b></td><td>己身一切：个性、才华、性向、职业适性、格局高低、运势起伏</td><td>含时间观：本命命宫管一生，大运命宫管十年，流年命宫管一年</td></tr>
+    <tr><td><b>兄弟宫</b></td><td>兄弟姊妹的个性缘分；与同事合伙人的聚散</td><td>象征私人机构（公司、工厂）</td></tr>
+    <tr><td><b>夫妻宫</b></td><td>配偶的个性格局、婚姻观、缘分厚薄、姻缘类型</td><td>与财帛宫合参看婚后对待</td></tr>
+    <tr><td><b>子女宫</b></td><td>子女缘分多寡；性生活能力</td><td><em class="hl">桃花宫</em>、合伙位、意外宫、学生缘</td></tr>
+    <tr><td><b>财帛宫</b></td><td>赚钱能力、理财能力、财从哪来到哪去</td><td>与夫妻宫合参论婚后对待（夫妻之夫妻位）</td></tr>
+    <tr><td><b>疾厄宫</b></td><td>健康体质、疾病灾厄类型</td><td><em class="hl">脾气宫</em>、观心术正邪的宫位</td></tr>
+    <tr><td><b>迁移宫</b></td><td>出外发展、驿马奔波、社会机遇</td><td><em class="hl">机遇宫</em>（逢贵人）、老运宫、交通意外看这里</td></tr>
+    <tr><td><b>奴仆宫</b></td><td>朋友部属的缘分、益友损友</td><td>众生相之宫、<em class="hl">绝情宫</em>——断寿元的关键宫位</td></tr>
+    <tr><td><b>官禄宫</b></td><td>事业营运、升迁转业、学业考运、功名官运</td><td><em class="hl">机运宫、气数宫</em>——兼论诉讼官非</td></tr>
+    <tr><td><b>田宅宫</b></td><td>祖业不动产、住宅环境、家运</td><td><em class="hl">库位</em>（财库）、可断火灾窃盗</td></tr>
+    <tr><td><b>福德宫</b></td><td>福气德性、人生观积极消极、精神享受</td><td><em class="hl">因果位、造化宫</em>——惜福积德行善可再造八字</td></tr>
+    <tr><td><b>父母宫</b></td><td>父母庇荫、与长上的缘分</td><td><em class="hl">文书宫</em>（读书契约智商）、长上宫、相貌宫</td></tr>
+  </table>
+  <div class="note"><b>排盘冷知识（第二章）</b>：时辰以阴历和出生地时间为准，作者反对经纬度换算（斗数是黄河流域文化，他给外国人算命「皆以当地出生时辰换算成农民历，应验奇准」）；夏令时间出生要扣一小时；<b>斗数重数不重节气</b>（子平八字才论节气）；闰月以十五日为界前后划分；夜子时（23-24 点）生日算今天不算明天。</div>
+</section>
+
+<!-- ============ 2b 六组分类 ============ -->
+<section id="s2b">
+  <h2><span class="chip">第二章</span>宫位的六组分类法</h2>
+  <p>十二宫不是散的，作者用六组「二分法」给它们装上坐标系——后面所有断诀都靠这套坐标系：</p>
+  <table>
+    <tr><th style="width:26%">分类</th><th>怎么分</th><th>读法</th></tr>
+    <tr><td><b>六阳宫 / 六阴宫</b></td><td>阳：命、夫妻、财帛、迁移、官禄、福德<br>阴：兄弟、子女、疾厄、奴仆、田宅、父母</td><td>入阳宫主观理性；入阴宫多感性变化</td></tr>
+    <tr><td><b>六内宫 / 六外宫</b></td><td>内：命、财帛、疾厄、官禄、田宅、福德<br>外：兄弟、夫妻、子女、迁移、奴仆、父母</td><td>分「自己分内事」还是「他人之事」——<b>论财官吉凶的关键</b>（忌入六内主得、入六外主失）</td></tr>
+    <tr><td><b>六亲宫 / 六事宫</b></td><td>亲：命、兄弟、夫妻、子女、奴仆、父母<br>事：财帛、疾厄、迁移、官禄、田宅、福德</td><td>分「论人」还是「论事」</td></tr>
+    <tr><td><b>本对宫</b></td><td>命↔迁移、兄弟↔奴仆、夫妻↔官禄、子女↔田宅、福德↔财帛、父母↔疾厄</td><td>「气言往来」——对宫互为表里（命宫是我，迁移是在外的我）</td></tr>
+    <tr><td><b>三合方</b></td><td>命·财帛·官禄（任一宫皆可立太极）</td><td>论事业财运的主轴</td></tr>
+    <tr><td><b>四正</b></td><td>命·迁移·子女·田宅</td><td>星辰组合按子午卯酉、辰戌丑未、寅申巳亥三组四正归纳</td></tr>
+  </table>
+  <p>还有两个特殊概念：<b>来因宫</b>（又名化气宫）——生年天干落在盘上同干之宫，「命运所有的一切皆脱胎于此」；<b>大运 / 流年</b>——十年行一大运（阳男阴女顺行、阴男阳女逆行），流年命宫落太岁年支之宫，流月起斗君，流日流时逐级顺推。</p>
+</section>
+
+<!-- ============ 3 四化体系 ============ -->
+<section id="s3">
+  <h2><span class="chip">第三章</span>全书引擎：四化体系</h2>
+  <p class="lead">四化是这本书的心脏：十天干带动四颗星产生「化」，于是静态的命盘动了起来。哲学源头是「易有太极，是生两仪，两仪生四象」——<em class="hl">化禄与化忌是一组阴阳对立，化权与化科是一组阴阳互因</em>。</p>
+  <div class="grid c2">
+    <div class="card luck">
+      <h4>化禄 <span class="tag">缘起 · 春</span></h4>
+      <p>财禄食禄、人缘异性缘、聪明才艺、忙碌施舍、增加增多、解厄制化。</p>
+      <p class="plain"><b>白话说</b>：「禄——宇宙万有一切缘起的开端」，<em class="hl">相当于一颗希望的种子</em>。坐禄于何宫，那宫就是你的「聚缘处」——好事从这里开始。</p>
+    </div>
+    <div class="card luck">
+      <h4>化权 <span class="tag">自变 · 夏</span></h4>
+      <p>权势掌权、能干专技、开创、任性霸道、争执摩擦、跌打损伤、增值。</p>
+      <p class="plain"><b>白话说</b>：权是「本来就会变」的自变数，带「不耐天磨不成大器」的磨字诀——有孤独感，<em class="hl">「化权教人逆来顺受，处变于自然而度过」</em>。</p>
+    </div>
+    <div class="card plain-c">
+      <h4>化科 <span class="tag">延续 · 秋</span></h4>
+      <p>科甲功名、声名清白、聪明博学、平顺计划、贵人解厄、风度风情（男风度、女风情）、念旧。</p>
+      <p class="plain"><b>白话说</b>：科是因缘的<b>延续</b>——「禄表新的展望，而科表旧有的回顾」，念旧、二度、重复之星，也是<b>全盘唯一主「解厄」的象</b>。</p>
+    </div>
+    <div class="card" style="border-color:var(--ink)">
+      <h4>化忌 <span class="tag">终点 · 冬</span></h4>
+      <p>变动动荡、收藏收束、亏欠固执、不顺是非、凶兆灾厄、无缘缘薄。</p>
+      <p class="plain"><b>白话说</b>：忌是因缘的终点，「犹如经过春夏秋冬，此乃循环之果」——但<em class="hl">「终止的刹那间，同时又隐藏了另一生机」</em>。忌主「欠」，欠哪宫就想补偿哪宫。</p>
+    </div>
+  </div>
+  <h3>3.1 三种四化：体、用、平衡</h3>
+  <table>
+    <tr><th style="width:20%">类型</th><th style="width:26%">性质</th><th>作用</th></tr>
+    <tr><td><b>生年四化</b></td><td>象之「体」——与生俱来，<em class="hl">其质不变</em></td><td>先天定数，决定命格富贵穷通，含前世因果</td></tr>
+    <tr><td><b>飞宫四化</b></td><td>象之「用」——宫干带动，后天变数</td><td>「数由用归体」，动态论吉凶的引擎</td></tr>
+    <tr><td><b>自化</b></td><td>平衡机制——自己宫干化自己宫的星</td><td>「旧的结束，新的开始」，无中生有、有中化无</td></tr>
+  </table>
+  <div class="note"><b>一句话框架</b>：生年四化是<b>出厂配置</b>（改不了），飞宫四化是<b>运行中的程序</b>（看吉凶），自化是<b>系统自动泄压</b>（主变化、留不住）。全书所有断法都在这三层里打转。</div>
+
+  <h3>3.2 双象组合：两组两组地看</h3>
+  <p>四化单独看是「气象」，两两组合才成「事件」。分组口诀：<em class="hl">禄忌一组，权科一组</em>。</p>
+  <table>
+    <tr><th style="width:14%">组合</th><th style="width:36%">论事业财运</th><th>论感情桃花</th></tr>
+    <tr><td><b>禄权</b></td><td>丰盛、财官兴旺，宜一般投资生产</td><td>泛水桃花、不专情</td></tr>
+    <tr><td><b>禄科</b></td><td>名利双收、因名得利，宜文路（会计师、律师、医师、教师）</td><td>有情有缘</td></tr>
+    <tr><td><b>权科</b></td><td>专技才艺（技师、工程师、建筑师）</td><td>一显一隐</td></tr>
+    <tr><td><b>禄忌</b></td><td>起伏大、变化大、周转大，<em class="hl">往往以双忌论，主凶</em></td><td>大起大落</td></tr>
+    <tr><td><b>权忌</b></td><td>技工机工、军警、薪俸</td><td>不期而遇、一拍即散</td></tr>
+    <tr><td><b>科忌</b></td><td>上班、教育、著作、服务业</td><td>藕断丝连、拖拖拉拉</td></tr>
+  </table>
+</section>
+
+<!-- ============ 4 十干四化表 ============ -->
+<section id="s4">
+  <h2><span class="chip">核心工具</span>十天干四化速查表</h2>
+  <p>这是全书最重要的一张表（第二章末与第三章详述两处核对一致），<b>每个生年天干 / 宫位天干，决定哪四颗星化禄权科忌</b>：</p>
+  <table>
+    <tr><th style="width:12%">天干</th><th>化禄</th><th>化权</th><th>化科</th><th>化忌</th></tr>
+    <tr><td><b>甲</b></td><td>廉贞</td><td>破军</td><td>武曲</td><td>太阳</td></tr>
+    <tr><td><b>乙</b></td><td>天机</td><td>天梁</td><td>紫微</td><td>太阴</td></tr>
+    <tr><td><b>丙</b></td><td>天同</td><td>天机</td><td>文昌</td><td>廉贞</td></tr>
+    <tr><td><b>丁</b></td><td>太阴</td><td>天同</td><td>天机</td><td>巨门</td></tr>
+    <tr><td><b>戊</b></td><td>贪狼</td><td>太阴</td><td>右弼</td><td>天机</td></tr>
+    <tr><td><b>己</b></td><td>武曲</td><td>贪狼</td><td>天梁</td><td>文曲</td></tr>
+    <tr><td><b>庚</b></td><td>太阳</td><td>武曲</td><td>太阴</td><td>天同</td></tr>
+    <tr><td><b>辛</b></td><td>巨门</td><td>太阳</td><td>文曲</td><td>文昌</td></tr>
+    <tr><td><b>壬</b></td><td>天梁</td><td>紫微</td><td>左辅</td><td>武曲</td></tr>
+    <tr><td><b>癸</b></td><td>破军</td><td>巨门</td><td>太阴</td><td>贪狼</td></tr>
+  </table>
+  <p>表的深意：十天干视同一太极，甲乙丙属天、丁戊己属地、庚辛壬属人、癸干属混沌——<em class="hl">「以贪狼星（贪欲之星）化忌作终了，周而复始，又是一个新的开始」</em>。天机星四化皆具且连成一线，构成「天人合一」的特殊关系。</p>
+  <div class="warn"><b>庚干四化之争</b>：历来有天同化科、天府化科等异议，本书明确采<b>「太阳化禄、武曲化权、太阴化科、天同化忌」</b>，并给五个论证（如「丙干天同化禄属天人天，庚干天同化忌属人天人，构成天人合一」）。看别的书若庚干写法不同，是流派之别。</div>
+
+  <h3>4.1 阳干化学变化 · 阴干物理变化</h3>
+  <p>星辰被四化「打中」后怎么变？看天干阴阳（原文在第四章开篇）：</p>
+  <div class="grid c2">
+    <div class="card"><h4>阳干（甲丙戊庚壬）→ 化学变化</h4><p><em class="hl">「不但变其外形，亦改变其质」</em></p><p class="plain">例：贪狼（甲木）化忌——处世变保守、桃花收束、贪欲之心收敛：外形和本质都变了。</p></div>
+    <div class="card"><h4>阴干（乙丁己辛癸）→ 物理变化</h4><p><em class="hl">「只变其形态，但性质不变」</em></p><p class="plain">例：巨门（癸水）化权——是非难免（质不变），但演讲辩论的语言能力加强：只放大音量，不改本性。</p></div>
+  </div>
+</section>
+
+<!-- ============ 5 生年四化落十二宫 ============ -->
+<section id="s5">
+  <h2><span class="chip">第三章</span>生年四化落十二宫（速查）</h2>
+  <p>生年四化是「出厂配置」：<b>禄=天生有缘有福</b>、<b>权=天生强势能干</b>、<b>科=天生平顺贵人</b>、<b>忌=天生亏欠辛苦</b>。落哪个宫，那个领域就带上这个底色。下表挑每宫最有辨识度的一条：</p>
+  <table>
+    <tr><th style="width:10%">宫</th><th style="width:24%">生年禄（福气）</th><th style="width:24%">生年权（强势）</th><th style="width:22%">生年科（平顺）</th><th>生年忌（亏欠）</th></tr>
+    <tr><td><b>命</b></td><td>福禄不缺、人缘佳、自立格</td><td>能干专技、性刚霸道</td><td>聪明平顺、我就是自己的贵人</td><td>坎坷固执、怀才不遇、宜幕后面</td></tr>
+    <tr><td><b>兄弟</b></td><td>手足情深、宜服务私人机构</td><td>易争执、宜分家独立</td><td>兄弟是我的贵人</td><td>潜意识想弥补、忌合伙</td></tr>
+    <tr><td><b>夫妻</b></td><td>缘浓情深、喜自由恋爱</td><td>配偶能干掌权、宜相忍互敬</td><td>配偶温柔体贴是我的贵人</td><td>缘薄、<em class="hl">晚婚为宜</em></td></tr>
+    <tr><td><b>子女</b></td><td>子女带财库来、生后财禄彰显</td><td>子女顽皮宜疏导</td><td>子女乖巧有教养</td><td>溺爱、得子迟、忌早合伙</td></tr>
+    <tr><td><b>财帛</b></td><td>得人缘之财、不善理财</td><td>敢赚敢花、以专技赚钱</td><td>理财有计划、不为财困</td><td>得财辛苦、宜买不动产锁财</td></tr>
+    <tr><td><b>疾厄</b></td><td>脾气好、长寿、幼年多灾</td><td>易碰伤撞伤、脾气烈</td><td>健康无大灾、逢凶化吉</td><td>体质弱、幼年多病</td></tr>
+    <tr><td><b>迁移</b></td><td><em class="hl">出外发迹</em>、机遇佳</td><td>在外掌权、忌锋芒太露</td><td>出外多贵人</td><td>出外不顺、易犯小人</td></tr>
+    <tr><td><b>奴仆</b></td><td>得朋友之助、宜人潮处谋生</td><td>朋友能干但易摩擦</td><td>朋友即我的贵人</td><td>惜情重义、唯不可重财</td></tr>
+    <tr><td><b>官禄</b></td><td>工作忙碌得财、易升迁</td><td>领导开创、宜外务</td><td>得贵人提拔、求学运佳</td><td>事业多变动、宜上班薪俸</td></tr>
+    <tr><td><b>田宅</b></td><td>有财有库、宜开工厂店面</td><td>喜置产、在家掌权</td><td>住宅舒适不喜搬家</td><td>置产不顺、幼年易搬家</td></tr>
+    <tr><td><b>福德</b></td><td>有福可享、乐善布施明去暗来</td><td>挥霍摆阔、难得清闲</td><td>有计划地享受、精神开朗</td><td>有福不会享、劳碌带是非</td></tr>
+    <tr><td><b>父母</b></td><td>得长辈庇荫、宜血缘地发展</td><td>父母威严、易有代沟</td><td>父母长上是贵人</td><td>缘薄代沟、孝顺拙于表达</td></tr>
+  </table>
+  <p class="hero-sub">注：每宫还有「逢自化」的变数（如生年忌之宫自化禄，一律以先不好后论），见下一节。</p>
+</section>
+
+<!-- ============ 6 飞宫自化 ============ -->
+<section id="s6">
+  <h2><span class="chip">第三章</span>飞宫与自化：让盘动起来</h2>
+  <p>生年四化是「静」，飞宫四化是「动」。总纲八个字：<em class="hl">「飞知现在，伏知将来」</em>——飞宫四化看当下事件，生年四化（伏象）看底牌。凡言象必假合两个宫：<b>A 宫的宫干，让某星化禄/权/科/忌，飞到 B 宫</b>。</p>
+  <h3>6.1 四个动词 + 一条铁律</h3>
+  <table>
+    <tr><th style="width:16%">术语</th><th>意思</th></tr>
+    <tr><td><b>化出 / 化入</b></td><td>A 宫四化到 B 宫谓之「交易」；对 A 宫是化出，对 B 宫是化入</td></tr>
+    <tr><td><b>照</b></td><td>禄/权/科化入 B 宫，同时影响 B 宫的对宫——谓之「照」（影响是弥散的）</td></tr>
+    <tr><td><b>冲</b></td><td><em class="hl">忌化入 B 宫，影响其对宫谓之「冲」</em>——冲击是尖锐的</td></tr>
+    <tr><td><b>碰撞</b></td><td>飞宫象（变数）撞上生年四化（定数）或自化——必须合并解义，吉凶由此产生</td></tr>
+  </table>
+  <div class="quote">「任何宫职化忌冲本命盘命宫，必见凶象。」<span class="src">——作者称此为「象术入门最重要的断命诀，且应验奇准」，学员戏称「一忌走天涯」</span></div>
+  <p>配套读法：<em class="hl">「忌入曰不吉，唯忌最怕冲，必主凶，缘薄」</em>——忌飞进某宫只是「不顺、管束」，冲到对宫才升级成「凶、缘薄」。另外：若化忌言果，则化禄是因——看到忌冲，就回头找发射宫的禄落在哪，即知因果链。</p>
+  <h3>6.2 飞宫八大理则（精简版）</h3>
+  <div class="step"><div class="n">1</div><div><b>互为阴阳</b>：交易两宫合为太极。圆融读法口诀：「A 宫把禄给了 B 宫；或因 B 宫的缘故，使得 A 宫化禄了。」例：夫妻宫化忌入迁移=配偶是外地人、宜外出谋生。</div></div>
+  <div class="step"><div class="n">2</div><div><b>体用有别</b>：命宫为体、十一宫为用。六亲宫化忌冲命=该亲人与我缘薄；六事宫化忌冲命=该事主破（财帛宫忌冲命=破财）。</div></div>
+  <div class="step"><div class="n">3</div><div><b>同类相冲最凶</b>：大运夫妻宫忌冲本命夫妻宫=十年婚姻不顺；大运官禄宫忌冲本命官禄宫=十年事业变动。</div></div>
+  <div class="step"><div class="n">4</div><div><b>由小归大</b>：飞宫只能从大运宫职飞入本命宫职，同位阶不能相加——「大运的夫妻宫」+「本命的奴仆宫」可以，「本命夫」+「本命奴」不行。</div></div>
+  <div class="step"><div class="n">5</div><div><b>碰撞出事件</b>：飞宫象逢生年四化或自化，须碰撞解义——变数撞上定数，「犹如命和运之交响乐曲」。</div></div>
+  <h3>6.3 自化：泄压阀</h3>
+  <p>自化三类型：①本宫宫干化本宫的星（如命宫宫干戊使坐守天机化忌）；②化对宫的星，「一律以化出解」；③对宫宫干化进本宫，「一律以化入解」。</p>
+  <p>核心含义：<em class="hl">「自化含有旧的结束，新的开始，或无中生有、有中化无之意」</em>——所以自化主<b>留不住</b>：留不住财（财进财出）、留不住缘、留不住情绪。凡无生年而有自化的六亲宫，「皆主该宫之人自力更生格」。</p>
+  <div class="note"><b>一张图记住三层</b>：生年四化（定数，天生的）→ 飞宫四化（变数，事件引擎）→ 自化（泄压，变化与流失）。应期口诀：「本命之垂象决定应数何大运；大运之垂象决定应数何流年」——<b>铁律定则</b>。</div>
+</section>
+
+<!-- ============ 7 十四主星 ============ -->
+<section id="s7">
+  <h2><span class="chip">第四章</span>星辰篇：十四主星速查</h2>
+  <p class="lead">星辰是「存有论」：万有之物以五行为类别。但记住总纲——<em class="hl">「星辰未受四化象之影响，谓之性星；受四化象之影响而质变，一律曰质可作物相解」</em>。星性只是底盘，四化才是变化机制。</p>
+  <div class="grid c3">
+    <div class="card"><h4>紫微 <span class="tag">帝星</span></h4><p>己土 · 化气为尊</p><p class="plain">尊贵领导，但「脆弱」——无六吉星辅弼即成孤君，耳软心活无定见。入六亲宫皆主孤。</p></div>
+    <div class="card"><h4>天机 <span class="tag">智星</span></h4><p>乙木 · 化气为善</p><p class="plain">宗教、五术、学术教育之星；机巧灵巧、主动易变迁。再见昌曲或化忌易钻牛角尖。</p></div>
+    <div class="card"><h4>太阳 <span class="tag">官禄主</span></h4><p>丙火 · 主贵</p><p class="plain">光明磊落、博爱，「一分努力一分收获」；主父夫子。女命逢之劳碌，有男人之志。</p></div>
+    <div class="card"><h4>武曲 <span class="tag">财帛主</span></h4><p>辛金 · 将星寡宿</p><p class="plain">第一颗大财星、正财星；性刚果决心直无毒，唯求速战速决。「财星入命必主孤」。</p></div>
+    <div class="card"><h4>天同 <span class="tag">福德主</span></h4><p>壬水 · 化气为福</p><p class="plain">温顺有福、温文典雅；男命易懒散，逢化权化忌反有开创（马头带箭格）。</p></div>
+    <div class="card"><h4>廉贞 <span class="tag">囚星</span></h4><p>丁火 · 化气为囚</p><p class="plain">次桃花、官非之星，象征公权力；善恶兼具仅一线之隔，「近墨则黑、近朱则赤」。</p></div>
+    <div class="card"><h4>天府 <span class="tag">库星</span></h4><p>戊土 · 化气为富</p><p class="plain">南斗帝王、财帛田宅主。如四川盆地：物产丰盛、四周高山环护——爱惜钱财护紧荷包。</p></div>
+    <div class="card"><h4>太阴 <span class="tag">田宅主</span></h4><p>癸水 · 主富</p><p class="plain">主母妻女；感情波动之星、快乐之星。女命古典美外柔内急；男命此生得女人之助。</p></div>
+    <div class="card"><h4>贪狼 <span class="tag">桃花主</span></h4><p>甲木 · 主祸福</p><p class="plain">第二颗大财星、五术才艺之星。欲望之星：收敛则福，<em class="hl">贪欲过重桃花浮滥则祸</em>。</p></div>
+    <div class="card"><h4>巨门 <span class="tag">暗星</span></h4><p>癸水 · 主是非</p><p class="plain">口舌之神：善用则教师律师广播，滥用则言不及义。性不明、猜忌，同宫有禄存可解。</p></div>
+    <div class="card"><h4>天相 <span class="tag">印星</span></h4><p>壬水 · 化气为印</p><p class="plain">衣食之星、和事佬——「愿做调解，不愿惹麻烦上身」；专解廉贞之恶。</p></div>
+    <div class="card"><h4>天梁 <span class="tag">荫星</span></h4><p>戊土 · 化气为荫</p><p class="plain">父母星、医药之星、寿星。喜照顾人却有老大作风；能遇难呈祥、解厄延寿。</p></div>
+    <div class="card"><h4>七杀 <span class="tag">将星</span></h4><p>庚金 · 化气为杀</p><p class="plain">大杀神、血光之星。性刚急躁、敢做敢当；女命漂亮上镜头，宜晚婚。</p></div>
+    <div class="card"><h4>破军 <span class="tag">耗星</span></h4><p>癸水 · 化气为耗</p><p class="plain">「破军一曜，性难明」，大成大败。<em class="hl">「唯有破必能修，有修必能成」</em>——高哲多坐命。</p></div>
+  </div>
+  <h3>7.1 双星怎么读</h3>
+  <p>同宫两星「相互引动，或加强、或牵制、或反作用」，同宫影响力大于对宫。排列按<b>四正</b>而非三合：子午卯酉、辰戌丑未、寅申巳亥三组。举例：紫微在子午单星独坐「犹如帝王出驾，侍卫近臣随从」；太阳会天梁主健康公益学术，会太阴主驿马感情——作者并批三合派「日月反背格前途无亮」为非（举蒋中正为例：以一介平民贵为九五至尊）。</p>
+</section>
+
+<!-- ============ 7b 吉煞星 ============ -->
+<section id="s7b">
+  <h2><span class="chip">第四章</span>吉星与煞星</h2>
+  <table>
+    <tr><th style="width:22%">星</th><th style="width:16%">性质</th><th>一句话记忆</th></tr>
+    <tr><td><b>左辅 / 右弼</b></td><td>六吉 · 行善令/制令</td><td>核心是<em class="hl">「再一次」</em>：重修补考、二度姻缘之象——但作者细解为三角习题或配偶再婚等，非必然二婚</td></tr>
+    <tr><td><b>文昌 / 文曲</b></td><td>六吉 · 科名</td><td>文昌正途功名、学术温雅；文曲异途功名、口才伶俐；昌曲化忌防文书官非</td></tr>
+    <tr><td><b>天魁 / 天钺</b></td><td>六吉 · 贵人</td><td>阳贵（男）/阴贵（女）；四十岁前人荫多贵人，四十岁后反主荫人</td></tr>
+    <tr><td><b>禄存</b></td><td>财神 · 寿星</td><td>「化气为富」、财王星；性主孤寡，可制巨门之恶；不宜入六亲宫</td></tr>
+    <tr><td><b>羊刃 / 陀罗</b></td><td>六煞</td><td>羊刃主刑伤血光（子午卯酉更重）；陀罗如化忌——<em class="hl">原地打转、挥之不去</em></td></tr>
+    <tr><td><b>火星 / 铃星</b></td><td>六煞</td><td>相当于一颗化权星：火星外放急躁、铃星阴沉内向；火星可断火灾</td></tr>
+    <tr><td><b>天马</b></td><td>驿马</td><td>年马主驿马，月马兼主财马；与禄存同宫「禄马交驰，财在远乡求」</td></tr>
+    <tr><td><b>天刑</b></td><td>孤克</td><td>与法律、医术、命理、佛缘有关；草药之星、借贷之星</td></tr>
+    <tr><td><b>天姚</b></td><td>风流</td><td>化气为破耗；早熟、异性缘浓、幽默风雅</td></tr>
+    <tr><td><b>红鸾 / 天喜</b></td><td>虚星</td><td>喜庆之星，流年走到主喜事——但<em class="hl">「并非绝然论断红鸾星动必有人提亲」</em></td></tr>
+  </table>
+</section>
+
+<!-- ============ 8 应用 ============ -->
+<section id="s8">
+  <h2><span class="chip">第五~七章</span>应用：婚姻 · 意外 · 财官</h2>
+  <p class="lead">这三章是「工具组合实战」。理论不变：宫位定领域、星性定性质、四化定吉凶。每章先记「看哪几个宫」。</p>
+  <h3>8.1 婚姻桃花（第五章）</h3>
+  <table>
+    <tr><th style="width:26%">看什么</th><th>规则</th></tr>
+    <tr><td><b>先天姻缘</b></td><td>命宫 + 夫妻宫 + 福德宫（福德可视为第二个夫妻宫，尤以女命为甚）</td></tr>
+    <tr><td><b>婚后对待</b></td><td>命宫 + 夫妻宫 + 财帛宫（财帛是夫妻立太极的「夫妻之夫妻位」）</td></tr>
+    <tr><td><b>桃花</b></td><td>子女宫为桃花宫——桃花运良恶性、性生活能力</td></tr>
+    <tr><td><b>夫妻宫煞星</b></td><td>羊刃陀罗=破坏力强，大吵或肢体冲突；火星铃星=较弱，冷战相骂；天刑=三观差距难沟通</td></tr>
+    <tr><td><b>桃花星 vs 贵人星</b></td><td>桃花星=天姚、贪狼、廉贞、昌曲、红鸾、化科化禄；贵人星=六吉+化科。<em class="hl">「贵人星破坏力远大于桃花星」</em>（辅弼的「再一次」现象）</td></tr>
+  </table>
+  <div class="quote">「夫妻是缘，无缘不配；父子是债，无债不来。」<span class="src">——四化配缘业：忌言果报、禄为造因、权科为媒介（三象一物说）</span></div>
+  <p>作者的婚姻「三莫」：莫怨天尤人（一个忍字）；<em class="hl">莫听信江湖术士改命改运</em>；莫钻牛角尖（调整三观是真正化解之道）。婚前三是：多交往、建立经济力、先天姻缘欠佳应晚婚。</p>
+
+  <h3>8.2 交通意外（第六章）</h3>
+  <table>
+    <tr><th style="width:26%">看什么</th><th>规则</th></tr>
+    <tr><td><b>三宫合参</b></td><td>命宫 + 迁移宫 + 疾厄宫（子女宫为意外宫，须与迁移或疾厄发生交易才成立）</td></tr>
+    <tr><td><b>核心铁则</b></td><td><em class="hl">「命宫与迁移宫的宫干组合，使得化禄与化忌交会于疾厄宫、迁移宫或子女宫时，必有交通事故发生」</em>（如丁辛组合：丁巨门化忌+辛巨门化禄交会于疾厄）</td></tr>
+    <tr><td><b>星辰取象</b></td><td>廉贞化忌+七杀在迁移=古书「路旁埋尸」；七杀+羊刃=骨折脱臼；巨门=卡车；破军=货柜联结车；昌曲=计程车、化忌主罚单；羊刃、太阴、文昌为血光之星</td></tr>
+    <tr><td><b>四化取象</b></td><td><em class="hl">「论及交通意外，尤须注意权忌的组合」</em>——权含外来伤害，自化权=变化中带破耗</td></tr>
+  </table>
+  <p>作者的实用建议五条：戴安全帽、不酒驾、不开快车、垂象年少的年份少出远门、莫信神棍改运——「君子问祸不问福，趋吉避凶之道」。</p>
+
+  <h3>8.3 财帛官禄（第七章）</h3>
+  <table>
+    <tr><th style="width:26%">看什么</th><th>规则</th></tr>
+    <tr><td><b>两宫合参</b></td><td>财运看命宫+财帛宫；事业学业看命宫+官禄宫</td></tr>
+    <tr><td><b>体用总纲</b></td><td><em class="hl">「取三合为用，四正为体；六阳为贵，六阴为富」</em>——体以命宫田宅为重，用以财帛官禄为重，体生用、用归体</td></tr>
+    <tr><td><b>吉凶总开关</b></td><td><em class="hl">「四化象是以化忌决定吉凶……忌若主吉则禄权科皆吉论」</em></td></tr>
+    <tr><td><b>内外分判</b></td><td>财帛化忌入六内宫主吉得，入六外宫主凶失</td></tr>
+    <tr><td><b>飞宫示例</b></td><td>财忌入命=得财唯辛劳节俭；官忌入田=宜开工厂店面；田忌入官=拿产业投资赚钱但易受困周转（体生用）</td></tr>
+  </table>
+  <p>另有一条分水岭：<b>生年忌落宫是一生财官转折的关键宫</b>；终身行业倾向由命、财、疾三宫的生年四化合星辰之质、合来因宫定之。</p>
+</section>
+
+<!-- ============ 9 天地数 ============ -->
+<section id="s9">
+  <h2><span class="chip">第八章</span>天地数：压轴公开的「秘技」</h2>
+  <p>第八章把历来秘传的「天地数」摊开。作者的动机很直接：<em class="hl">「秘则贵，贵则有人借它敛财；把秘公开，歪风就少了滋生的土壤。」</em></p>
+  <div class="grid c2">
+    <div class="card"><h4>第一步：宫干定「目」（位数）</h4><p>生数 1~4 属坤道主化（四化），成数 6~9 属乾道主变（九重天）。</p><p class="plain">破耗之气纳集在哪个宫，就看那个宫的宫干之数：庚=7 → 七位数 = <b>百万单位</b>；己=6 → 六位数 = 十万单位。</p></div>
+    <div class="card"><h4>第二步：化象定「数」</h4><p>生年禄宫干定基数（如戊=5），再看法象带动的化象之数——<em class="hl">「化科星是 3 数，乃东方木之故」</em>。</p><p class="plain">5 + 3 = 8 → 定数为 8。两步相乘得实际金额（书中案例=八百多万）。</p></div>
+  </div>
+  <p>口诀：<em class="hl">「自化与不自化，用法颠倒；法象生年，单象与双象用法一。」</em></p>
+  <div class="note"><b>配套的哲学骨架（第八章）</b>：「禄随忌走」——单靠生年禄未必有实物，须连结生年忌而维生（缘起须有物）；飞宫四字诀「有、时、空、动」；兼三才而两之——<em class="hl">决定吉凶者在「本命、大运」，流年只是活盘重叠</em>。化忌、化权、化禄之数书中预告留待第二本。</div>
+</section>
+
+<!-- ============ 10 案例 ============ -->
+<section id="s10">
+  <h2><span class="chip">实战</span>两个完整案例拆解</h2>
+  <div class="case">
+    <h4>案例一：24 岁结婚、25 岁离婚（第五章）</h4>
+    <div class="step"><div class="n">1</div><div>生年忌在官禄宫，冲照夫妻宫 → 先天姻缘不吉（伏象先亮底牌）。</div></div>
+    <div class="step"><div class="n">2</div><div>夫妻宫右弼、福德宫左辅 → 「再一次」之象——但作者强调须逢后天行运差、大运夫妻宫见凶象时才构成生离死别，不是看到辅弼就断二婚。</div></div>
+    <div class="step"><div class="n">3</div><div>16-25 大运夫妻宫宫干丙，天同化禄照本命夫妻宫 → 这十年姻缘来到，24 岁流年走至亥宫「果然结婚了」。</div></div>
+    <div class="step"><div class="n">4</div><div>关键碰撞：<em class="hl">交易象的化禄逢生年化忌，以双忌论</em> → 埋下多起伏恶缘；25 岁流年命宫与大运命宫重叠，「引爆了」——离婚，「恰是缘业本相生的写照」。</div></div>
+    <div class="step"><div class="n">5</div><div>结论：宜晚婚，「修身养性、拥有健康的婚姻观，可解矣」。</div></div>
+  </div>
+  <div class="case">
+    <h4>案例二：富翁合伙失败，被冒领八百多万（第八章天地数）</h4>
+    <div class="step"><div class="n">1</div><div>大运财帛宫坐生年忌，与本命兄弟宫（=交友宫）重叠 → 这十年的财与朋友息息相关。</div></div>
+    <div class="step"><div class="n">2</div><div>其宫干乙：化禄化忌（<b>双忌论</b>）入本命迁移、冲本命 → 必主大破财。</div></div>
+    <div class="step"><div class="n">3</div><div>逢生年权带动来因宫（=本命宫，合伙位）→ 破在合伙事业。</div></div>
+    <div class="step"><div class="n">4</div><div>自化科有时间观念，法象生年科在戌宫 → 定在壬戌年（37 岁）应数。</div></div>
+    <div class="step"><div class="n">5</div><div>四象全齐（禄忌双忌+生年权+自化科）→ <em class="hl">「必主混沌」</em>：钱被朋友劫走冒领。</div></div>
+    <div class="step"><div class="n">6</div><div>定「目」：破耗之气纳集本迁，宫干庚=7 → 七位数=百万单位。</div></div>
+    <div class="step"><div class="n">7</div><div>定「数」：戌宫干戊=5，又化科（3 数）到对宫视同加法 → 5+3=8。</div></div>
+    <div class="step"><div class="n">8</div><div>合计：<b>八百多万元</b>。</div></div>
+  </div>
+  <p>两个案例共同示范了全书的推理范式：<b>先看生年四化（底牌）→ 再看大运飞宫（事件）→ 碰撞定吉凶 → 宫职重叠定应期 → （天地数）定量</b>。</p>
+</section>
+
+<!-- ============ 11 术语表 ============ -->
+<section id="s11">
+  <h2><span class="chip">附录</span>术语速查表</h2>
+  <table>
+    <tr><th style="width:24%">术语</th><th>一句话解释</th></tr>
+    <tr><td><b>生年四化</b></td><td>出生年天干带出的四化，象之体，先天定数，其质不变</td></tr>
+    <tr><td><b>飞宫四化</b></td><td>某宫宫干让星辰化出、飞入另一宫，象之用，事件引擎</td></tr>
+    <tr><td><b>自化</b></td><td>宫干化自己宫（或对宫视同）的星，主变化、流失、「旧的结束新的开始」</td></tr>
+    <tr><td><b>双忌</b></td><td>两组忌（或禄忌对撞等特定组合）叠加，以大凶论</td></tr>
+    <tr><td><b>来因宫</b></td><td>生年天干所在之宫（化气宫），「命运所有的一切皆脱胎于此」</td></tr>
+    <tr><td><b>体 / 用</b></td><td>体=静态底盘（生年、命宫田宅）；用=动态运作（飞宫、财帛官禄）。「体生用，用归体」</td></tr>
+    <tr><td><b>六内 / 六外</b></td><td>自己分内（命财疾官田福）vs 他人之事（兄夫子迁奴父）；忌入内主得、入外主失</td></tr>
+    <tr><td><b>照 / 冲</b></td><td>禄权科化入影响对宫为照（弥散）；忌化入影响对宫为冲（尖锐，主凶）</td></tr>
+    <tr><td><b>位法位</b></td><td>同类宫职归位叠合（生年禄之宫位定流年等）</td></tr>
+    <tr><td><b>三象一物</b></td><td>禄（因）权科（媒介）忌（果）合而解一个具体事件</td></tr>
+    <tr><td><b>禄随忌走</b></td><td>禄是缘起、忌是终点；禄的气随忌而行——单禄不生物，禄忌连结方成事</td></tr>
+    <tr><td><b>一六共宗</b></td><td>河图数理配宫：命-疾厄一六、兄弟-迁移二七、夫妻-奴仆三八、子女-官禄四九、财帛-田宅五十</td></tr>
+    <tr><td><b>大运 / 流年 / 斗君</b></td><td>十年一大运（阳男阴女顺行）；流年命宫在太岁支；流月起斗君，流日流时顺推</td></tr>
+  </table>
+</section>
+
+<!-- ============ 12 FAQ ============ -->
+<section id="s12">
+  <h2><span class="chip">附录</span>常见问题 FAQ</h2>
+  <div class="faq"><b class="q">Q1：命到底能不能改？</b>
+    <p>作者的答案斩钉截铁：<em class="hl">「命和运绝不可能改，否则天理何在？因果循环的相续何来？」</em>但「性不能改，心可变」——修福德（惜福积德行善）、调整三观、晚婚避险、谨慎驾驶，是「以时间换取空间」的<b>运</b>层改善。命理学定位是咨询，不是改运。</p></div>
+  <div class="faq"><b class="q">Q2：为什么书里说只看星性是「跛脚」的？</b>
+    <p>因为星辰是静态底盘，<em class="hl">「无十干化曜四化象的冲动，焉有吉凶得失」</em>。星星只说明「是什么性质」，四化才说明「何时、何事、怎么变」。宫·星·象三合一才完整。</p></div>
+  <div class="faq"><b class="q">Q3：生年四化、飞宫四化、自化，先看哪个？</b>
+    <p>先看生年四化（底牌：命格），再看大运宫职飞宫（这十年的事件），自化和碰撞定变化与应期。口诀「飞知现在，伏知将来」。</p></div>
+  <div class="faq"><b class="q">Q4：最简单可操作的一条断诀是什么？</b>
+    <p><em class="hl">「任何宫职化忌冲本命盘命宫，必见凶象」</em>——一忌走天涯。看到忌先问：入哪个宫（不顺在哪），冲到谁（凶在谁）；再找发射宫的禄，即知因在哪。</p></div>
+  <div class="faq"><b class="q">Q5：剖腹产择时有用吗？</b>
+    <p>作者批为「万般皆有定」，刻意择时多出自敛财者之手，「倒不如顺自然生产可也」。</p></div>
+  <div class="faq"><b class="q">Q6：学到什么程度算入门？</b>
+    <p>按本手册路径：背下十干四化表（第 4 节）→ 十二宫含义（第 2 节）→ 禄权科忌四字（第 3 节）→ 用「忌入/忌冲」读自己命盘的每个宫（第 6 节）。能对着盘把生年四化的落宫讲出「哪个领域天生有福/有欠」，就算入门了。</p></div>
+  <p class="hero-sub" style="margin-top:36px">本手册为读书笔记性质的白话整理，术语与引文忠于许铨仁《命理学正解》；「白话说」部分为编者转译。命理内容属传统文化范畴，请理性看待。</p>
+  <p class="toc-top"><a href="#s0">↑ 回到目录</a></p>
+</section>
+
+</main>
+</div>
+</body>
+</html>

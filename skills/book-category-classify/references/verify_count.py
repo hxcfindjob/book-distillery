@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""校验一份 15 类分类清单 markdown 文件的本数与结构。
+"""校验一份 16 类分类清单 markdown 文件的本数与结构。
 
 用法：
     python3 verify_count.py <书单数据源-vN.md>
@@ -8,7 +8,7 @@
 输出：
     - 每个类的本数
     - 总本数
-    - 类别数（必须 = 15，否则报错）
+    - 类别数（必须 = 16，否则报错）
     - 总本数是否 = 各类之和
     - 书名行是否带 作者/关键词 字段（用于最终化清单体检）
 
@@ -57,14 +57,14 @@ def main():
     for k in order:
         print(f'  {k:<10} {len(data[k]):>4} 本')
     print('-' * 50)
-    print(f'  类别数：{len(order)}  {"✅=15" if len(order)==15 else "❌≠15，必须 15 类"}')
+    print(f'  类别数：{len(order)}  {"✅=16" if len(order)==16 else "❌≠16，必须 16 类"}')
     print(f'  总本数：{total}')
     sum_check = sum(len(v) for v in data.values())
     print(f'  总=各类之和：{"✅" if total==sum_check else "❌"} ({sum_check})')
     if missing_meta:
         print(f'  ⚠️  {missing_meta} 本书名行缺 作者/关键词 字段（最终化清单应补全）')
     print('=' * 50)
-    if len(order) != 15:
+    if len(order) != 16:
         sys.exit(2)
 
 
